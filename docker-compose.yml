@@ -11,6 +11,16 @@ services:
     volumes:
       - ./chatbot:/chatbot
       - /chatbot/node_modules
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    working_dir: /dashboard
+    ports:
+      - "3002:5174"
+    volumes:
+      - ./dashboard:/dashboard
+      - /dashboard/node_modules
   api:
     build:
       context: ./api
