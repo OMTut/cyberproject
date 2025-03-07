@@ -1,6 +1,16 @@
 version: "3.8"
 
 services:
+  chatbot:
+    build:
+      context: ./chatbot
+      dockerfile: Dockerfile
+    working_dir: /chatbot
+    ports:
+      - "3001:5173"
+    volumes:
+      - ./chatbot:/chatbot
+      - /chatbot/node_modules
   api:
     build:
       context: ./api
