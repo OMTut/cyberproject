@@ -1,4 +1,16 @@
 
 __init__.py
 
+# Ignore virtual environment directory
+.venv/
+venv/
 .env
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore system dependencies (installed with pip)
+site-packages/
