@@ -25,6 +25,8 @@ services:
       dockerfile: Dockerfile
     working_dir: /app
     command: uvicorn app.main:app --host 0.0.0.0 --port 5000 --reload  # Enables auto-reload
+    env_file:
+      - ./api/.env
     volumes:
       - ./api/app:/app/app  # Mounts local files into the container
     ports:
