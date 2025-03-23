@@ -14,3 +14,5 @@ __pycache__/
 
 # Ignore system dependencies (installed with pip)
 site-packages/
+
+.DS_Store
