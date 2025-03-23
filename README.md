@@ -3,9 +3,17 @@
 ### Noble Team Members
 
 ## Docker Install
+
+start Docker Desktop
+
 cd into cyberproject director
 ```yaml
 docker-compose up --build
+```
+
+or to run it without rebuilding
+```yaml
+docker-compose up -d
 ```
 
 if there is a previous container already
