@@ -10,6 +10,10 @@ Cyperproject
 |   |---package.json
 |   |---Dockerfile
 |---api/
+|   |---app/
+|   |   |---database/
+|   |   |---services/
+|   |   |---main.py
 |   |---requirements
 |   |---Dockerfile
 |---detector/
