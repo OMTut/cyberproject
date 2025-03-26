@@ -6,10 +6,10 @@ from app.services.database import get_db
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-@router.get("/attacks", response_model=List[Dict[str, Any]])
+@router.get("/prompts/clean", response_model=List[Dict[str, Any]])
 async def get_all_prompts(db=Depends(get_db)):
    """
-   Fetch all prompts that are attacks from the database.
+   Fetch all prompts that are not attacks from the database.
    Returns a list of prompts as JSON.
    """
    try:
@@ -17,7 +17,7 @@ async def get_all_prompts(db=Depends(get_db)):
       prompts_collection = db.prompts
         
       # Fetch all prompts from the database
-      cursor = prompts_collection.find({"isAttack": True})
+      cursor = prompts_collection.find({"isAttack": False})
         
       # Convert MongoDB documents to Python dictionaries
       prompts = await cursor.to_list(length=None)
@@ -29,5 +29,5 @@ async def get_all_prompts(db=Depends(get_db)):
         
       return prompts
    except Exception as e:
-         logger.error(f"Database error in getAllAttacks endpoint: {str(e)}")
+         logger.error(f"Database error in getAllCleanPrompts endpoint: {str(e)}")
          raise HTTPException(status_code=500, detail=f"Error accessing database: {str(e)}")

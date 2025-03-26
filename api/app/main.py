@@ -5,8 +5,9 @@ import logging
 # Import routers
 from app.routes.root import router as root_router
 from app.routes.items import router as items_router
-from app.routes.getAllPrompts import router as prompts_router
-from app.routes.getAllAttacks import router as allAttacks_router
+from app.routes.dashboard.getAllPrompts import router as prompts_router
+from app.routes.dashboard.getAllAttacks import router as allAttacks_router
+from app.routes.dashboard.getAllCleanPrompts import router as allCleanPrompts_router
 from app.routes.chat import router as chat_router
 
 # Configure logging
@@ -21,6 +22,7 @@ app.include_router(root_router)
 app.include_router(items_router)
 app.include_router(prompts_router)
 app.include_router(allAttacks_router)
+app.include_router(allCleanPrompts_router)
 app.include_router(chat_router)
 
 @app.on_event("startup")
