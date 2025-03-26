@@ -1,9 +1,10 @@
 # API Routes
 
-## Routes Used by Dashboard
+## API Endpoints Used by Dashboard
 - Get all Prompts - /prompts
 - Get all Attacks - /prompts/attacks
 - Get all Clean Prompts - /prompts/clean
+- Get Attack by Type - /prompts/type?=whateverattackyoupick
 
 ## Note
 Make sure the api server is running either through the entire docker project
