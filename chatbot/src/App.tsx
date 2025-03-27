@@ -6,6 +6,7 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
+
   return (
     <>
       <div>
@@ -18,7 +19,7 @@ function App() {
       </div>
       <h1>Chatbot Placeholder</h1>
       <p>
-        This is a placeholder for the chatbot. It's based on Vite+React.
+        This is a placeholder for the chatbot and this is Ally. It's based on Vite+React.
       </p>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
