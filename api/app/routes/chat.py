@@ -17,6 +17,22 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
 
+class HealthCheckResponse(BaseModel):
+    status: str
+    message: str
+
+@router.get("/health", response_model=HealthCheckResponse)
+async def health_check():
+    """
+    Check the health of the LLM service connection
+    """
+    try:
+        result = await llm_service.health_check()
+        return HealthCheckResponse(**result)
+    except Exception as e:
+        logger.error(f"Health check failed: {str(e)}")
+        raise HTTPException(status_code=500, detail="Health check failed")
+
 @router.post("/prompt", response_model=ChatResponse)
 async def process_chat(request: ChatRequest):
     """
