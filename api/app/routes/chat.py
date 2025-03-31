@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from app.services.llm_service import LLMService
+from app.services.llm_service import LLMService # send to LLM
+from app.services.prompt_detector import PromptDetectorService
+from app.services.db_service import DatabaseService
 import logging
 
 router = APIRouter(
@@ -10,6 +12,8 @@ router = APIRouter(
 
 logger = logging.getLogger(__name__)
 llm_service = LLMService()
+prompt_detector = PromptDetectorService()
+db_service = DatabaseService()
 
 class ChatRequest(BaseModel):
     text: str
@@ -39,10 +43,28 @@ async def process_chat(request: ChatRequest):
     Process a chat prompt and return the LLM response
     """
     try:
-        # The prompt injection check would go here
-        # For now, we'll pass directly to the LLM
+
+        # Send it to the fake detector for now until the real one is build
+        is_safe, detection_result = await prompt_detector.analyze(request.text)
+
+        # Store the prompt in the db
+        await db_service.store_prompt(
+            prompt_text=request.text,
+            is_safe=is_safe,
+            detection_result=detection_result
+        )
+
+        # If the prompt is unsafe, return an error
+        if not is_safe:
+            logger.warning(f'Potentially unsafe prompt detected: {request.text[:30]}...')
+            raise HTTPException(
+                status_code=400,
+                detail="Request had unsafe content and we're not processing it."
+            )
         
-        # Get response from LLM service
+        # If safe, get the response from the LLM
+        
+        logger.info(f'Processing safe prompt: {request.text[:30]}')
         result = await llm_service.generate_response(request.text)
         
         # Handle different response formats

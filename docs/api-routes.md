@@ -4,7 +4,7 @@
 - Get all Prompts - /prompts
 - Get all Attacks - /prompts/attacks
 - Get all Clean Prompts - /prompts/clean
-- Get Attack by Type - /prompts/type?=whateverattackyoupick
+- Get Attack by Type - /prompts/type?type=whateverattackyoupick ex(prompt-injection)
 
 ## Reminder - about running it without Docker
 Make sure the api server is running either through the entire docker project
