@@ -13,7 +13,7 @@ class PromptDetectorService:
     def __init__(self):
         # Basic dictionary of attack types and their associated keywords
         self.attack_patterns = {
-            "prompt injection": [
+            "prompt-injection": [
                 "ignore previous instructions", 
                 "disregard", 
                 "instead",
@@ -30,14 +30,14 @@ class PromptDetectorService:
                 "bypass",
                 "restrictions"
             ],
-            "data exfiltration": [
+            "data-exfiltration": [
                 "reveal source code", 
                 "show system", 
                 "what is your training data",
                 "how were you trained",
                 "display internal"
             ],
-            "malicious code": [
+            "malicious-code": [
                 "eval(", 
                 "exec(", 
                 "system(",
