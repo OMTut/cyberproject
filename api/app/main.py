@@ -7,12 +7,22 @@
 #
 # Database Enpoints
 # To interact with the database, use the following (use a GET requests):
-# get all prompts: /prompts
+# get all prompts: localhost:5000/prompts
 # get all attacks: /prompts/attacks
 # get all clean prompts: /prompts/clean
 # get attacks by type: /prompts/attacks/{name of attack here}
 #     ex: prompts/attacks/prompt-injection
 #     ex: prompts/attacks/jailbreak
+# the object return is currently structure as follow:
+# {
+#   "_id": mongodb object id
+#   "prompt": str,
+#   "isAttack": boolean,
+#   "attackType": str,
+#   "confidence": float,
+#   "matches:" [ ], //a list of strings
+#   "created_at": date
+# }
 ##############################################################
 from fastapi import FastAPI
 from app.services.database.connection import connect_to_mongo, close_mongo_connection
