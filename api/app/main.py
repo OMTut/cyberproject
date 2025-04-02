@@ -3,7 +3,7 @@ from app.services.database.connection import connect_to_mongo, close_mongo_conne
 import logging
 
 # Import routers
-# from app.routes.dashboard.getAllPrompts import router as prompts_router
+from app.routes.dashboard.getAllPrompts import router as prompts_router
 # from app.routes.dashboard.getAllAttacks import router as allAttacks_router
 # from app.routes.dashboard.getAllCleanPrompts import router as allCleanPrompts_router
 # from app.routes.dashboard.getAttackByType import router as attackByType_router
@@ -36,7 +36,7 @@ async def app_shutdown():
 # Include routers
 # app.include_router(root_router)
 # app.include_router(items_router)
-# app.include_router(prompts_router)
+app.include_router(prompts_router)
 # app.include_router(allAttacks_router)
 # app.include_router(allCleanPrompts_router)
 # app.include_router(attackByType_router)
