@@ -3,6 +3,7 @@ from typing import Dict, Any
 import logging
 from app.services.PromptDetectorService import PromptDetectorService
 from app.services.llm_service import LLMService
+from app.services.database.actions.prompts.storePrompt import store_prompt_analysis
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -28,6 +29,18 @@ async def analyze_prompt(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
         # Analyze the prompt using the PromptDetectorService
         detector = PromptDetectorService()
         analysis_result = detector.analyze_prompt(prompt_text)
+
+        try:
+            await store_prompt_analysis(
+                prompt=prompt_text,
+                is_attack=analysis_result["isAttack"],
+                attack_type=analysis_result["attackType"],
+                confidence=analysis_result["confidence"],
+                matches=analysis_result["matches"]
+            )
+        except Exception as db_error:
+            logger.error(f"Failed to store prompt: {str(db_error)}")
+            # Continue processing even if storage fails
         
         logger.info(f"Prompt analyzed: {'ATTACK' if analysis_result['isAttack'] else 'CLEAN'}")
 
