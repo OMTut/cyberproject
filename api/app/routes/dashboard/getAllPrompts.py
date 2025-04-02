@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List, Dict, Any
-from app.services.database.connection import get_database
+from app.services.database.actions.prompts.getAllPrompts import get_all_prompts
 import logging
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
 @router.get("/prompts", response_description="List all prompts", tags=["prompts"])
-async def get_all_prompts() -> List[Dict[str, Any]]:
+async def list_all_prompts() -> List[Dict[str, Any]]:
     """
     Retrieves all prompts from the database.
     Returns:
@@ -17,18 +17,7 @@ async def get_all_prompts() -> List[Dict[str, Any]]:
         HTTPException: If database operation fails
     """
     try:
-        db = await get_database()
-        prompts_collection = db.prompts
-        
-        # Convert cursor to list of dictionaries
-        prompts = await prompts_collection.find().to_list(length=None)
-        
-        # Convert ObjectId to string for JSON serialization
-        for prompt in prompts:
-            prompt["_id"] = str(prompt["_id"])
-        
-        return prompts
-    
+      return await get_all_prompts()
     except Exception as e:
         logger.error(f"Error retrieving prompts: {str(e)}")
         raise HTTPException(
