@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Body
 from typing import Dict, Any
 import logging
 from app.services.PromptDetectorService import PromptDetectorService
+from app.services.llm_service import LLMService
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -29,8 +30,20 @@ async def analyze_prompt(payload: Dict[str, Any] = Body(...)) -> Dict[str, Any]:
         analysis_result = detector.analyze_prompt(prompt_text)
         
         logger.info(f"Prompt analyzed: {'ATTACK' if analysis_result['isAttack'] else 'CLEAN'}")
+
+        # If it's an attack
+        if analysis_result["isAttack"]:
+            return {
+                "status": "rejected",
+                "reason": "Potential attack detected",
+                "analysis": analysis_result
+            }
         
-        return analysis_result
+        # If it's safe
+        llm_service = LLMService()
+        llm_response = await llm_service.generate_response(prompt_text)
+        
+        return llm_response
         
     except HTTPException:
         # Re-raise HTTP exceptions as they already have appropriate status codes
