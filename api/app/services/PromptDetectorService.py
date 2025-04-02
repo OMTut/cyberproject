@@ -1,71 +1,117 @@
-from typing import Dict, Any
 import logging
-from motor.motor_asyncio import AsyncIOMotorDatabase
-from datetime import datetime
-import traceback
+import re
+from typing import Dict, Any, Tuple, List
 
 logger = logging.getLogger(__name__)
 
 class PromptDetectorService:
-   def __init__(self, db: AsyncIOMotorDatabase):
-      self.db = db
-
-   async def analyze_prompt(self, prompt: str) -> Dict[str, Any]:
-      '''
-      Analyzes a prompt for potential attacks and stores the result in the database.
-      Params: prompt (str): The prompt text to analyze
-      Returns: Dict[str, Any]: Analysis result containing at minimum an 'isAttack' field
-      '''
-      try:
-         logger.info(f'Analyzing prompt: {prompt[:50]}...')
-
-         # Placeholder for detector integration
-         analysis_result = await self._run_detector(prompt)
-
-         # Store the result
-         # We might want to add the confidence score from the model, or
-         #    not and keep is simple
-         document = {
-            "prompt": prompt,
-            "isAttack": analysis_result['isAttack'],
-            "attackType": analysis_result['attackType']
-         }
-
-         await self.db.prompts.insert_one(document)
-         logger.info(f"Stored analysis result in db with isAttack={analysis_result['isAttack']}")
-         return analysis_result
-      except Exception as e:
-         logger.error(f'Error analyzing prompt: {str(e)}')
-         logger.debug(traceback.format_exc())
-         # Return a safe default in case of error
-         return {
-            'isAttack': False,
-            'attackType': 'none',
-            'error': str(e)
-         }
-      
-   async def _run_detector(self, prompt: str) -> Dict[str, Any]:
-      """
-      Placeholder for the detector integration. This method will be
-      implemented by another teammate.
+    """
+    A service for detecting potentially malicious prompts.
+    This is a simple implementation that will be replaced with a more sophisticated ML model later.
+    """
+    
+    def __init__(self):
+        # Basic dictionary of attack types and their associated keywords
+        self.attack_patterns = {
+            "prompt injection": [
+                "ignore previous instructions", 
+                "disregard", 
+                "instead",
+                "system prompt",
+                "system message",
+                "you are now",
+                "new role"
+            ],
+            "jailbreak": [
+                "DAN", 
+                "developer mode", 
+                "ignore ethics",
+                "no moral",
+                "bypass",
+                "restrictions"
+            ],
+            "data exfiltration": [
+                "reveal source code", 
+                "show system", 
+                "what is your training data",
+                "how were you trained",
+                "display internal"
+            ],
+            "malicious code": [
+                "eval(", 
+                "exec(", 
+                "system(",
+                "subprocess",
+                "os.system",
+                "</script>"
+            ]
+        }
+    
+    def analyze_prompt(self, prompt_text: str) -> Dict[str, Any]:
+        """
+        Analyzes a prompt for potential attacks.
+        Args:
+            prompt_text: The text of the prompt to analyze
+        Returns:
+            Dict containing analysis results:
+            {
+                "isAttack": bool,
+                "type": str or None,
+                "confidence": float (0-1),
+                "matches": List of detected patterns
+            }
+        """
+        prompt_lower = prompt_text.lower()
         
-      Params: prompt (str): The prompt to analyze
-      Returns: Dict[str, Any]: Analysis result with at least 'isAttack' field
-      """
-      # This is just a placeholder implementation
-      # In a real implementation, this would call the actual detector
+        # Check for attack patterns
+        detected_attacks = []
+        matched_patterns = []
         
-      # Mock detection logic (to be replaced)
-      suspicious_keywords = ["hack", "exploit", "vulnerability", "sql injection", "xss"]
-      is_attack = any(keyword in prompt.lower() for keyword in suspicious_keywords)
-      attackType = 'TBD'
+        for attack_type, patterns in self.attack_patterns.items():
+            for pattern in patterns:
+                if pattern.lower() in prompt_lower:
+                    detected_attacks.append(attack_type)
+                    matched_patterns.append(pattern)
+                    logger.warning(f"Potential {attack_type} attack detected: '{pattern}' found in prompt")
+                    print(f"ALERT: Potential {attack_type} attack detected: '{pattern}' found in prompt")
         
-      return {
-         "isAttack": is_attack,
-         'attackType': attackType
-         # "confidence": 0.8 if is_attack else 0.2,
-         # "details": {
-         # "method": "placeholder_detection",
-         # "description": "This is a placeholder detection that will be replaced with actual implementation"
-         # }
-      }
+        # Calculate results
+        if detected_attacks:
+            # Get the most frequent attack type
+            attack_type = max(set(detected_attacks), key=detected_attacks.count)
+            
+            # Simple confidence calculation based on number of matches
+            # In a real system, this would use ML model confidence scores
+            confidence = min(0.5 + (len(matched_patterns) * 0.1), 0.95)
+            
+            return {
+                "isAttack": True,
+                "attackType": attack_type,
+                "confidence": confidence,
+                "matches": matched_patterns
+            }
+        else:
+            return {
+                "isAttack": False,
+                "attackType": None,
+                "confidence": 0.0,
+                "matches": []
+            }
+    
+    # TODO: Add more sophisticated detection using ML models
+    def _analyze_with_ml(self, prompt_text: str) -> Dict[str, Any]:
+        """
+        Future implementation placeholder for ML-based analysis.
+        This would integrate with a trained model to perform more accurate detection.
+        Args:
+            prompt_text: The text of the prompt to analyze
+        Returns:
+            Dict containing ML analysis results
+        """
+        # This is where ML model integration would happen
+        # For example:
+        # - Tokenize the input
+        # - Run it through the model
+        # - Interpret confidence scores
+        # - Return structured results
+        pass

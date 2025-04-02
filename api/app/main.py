@@ -7,7 +7,7 @@ from app.routes.dashboard.getAllPrompts import router as prompts_router
 from app.routes.dashboard.getAllAttacks import router as allAttacks_router
 from app.routes.dashboard.getAllCleanPrompts import router as allCleanPrompts_router
 from app.routes.dashboard.getAttackByType import router as attackByType_router
-# from app.routes.chat import router as chat_router
+from app.routes.chat.prompts import router as chat_router
 
 # Configure logging
 logging.basicConfig(
@@ -38,7 +38,7 @@ app.include_router(prompts_router)
 app.include_router(allAttacks_router)
 app.include_router(allCleanPrompts_router)
 app.include_router(attackByType_router)
-# app.include_router(chat_router)
+app.include_router(chat_router)
 
 @app.on_event("startup")
 async def startup_db_client():
