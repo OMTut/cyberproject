@@ -30,6 +30,9 @@ function App() {
   return (
     <>
     <div className="chat-app">
+    <header className="chat-header">
+          <h1>NobleGuard</h1>
+      </header>
       <div className="chat-container">
         <div className="messages-container">
           {messages.map((message, index) => (
