@@ -1,0 +1,11 @@
+/* Base styles */
+
+.button{
+    background-color:aquamarine;
+    border: black;
+    color: black;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+}
