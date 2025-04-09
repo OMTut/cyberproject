@@ -52,18 +52,12 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",    # Vite default (HTTP)
-        "https://localhost:5173",   # Vite default (HTTPS)
-        "http://localhost:3000",    # React default (HTTP)
-        "https://localhost:3000",   # React default (HTTPS)
-        "http://localhost:3001",    # Alternative React port (HTTP)
-        "https://localhost:3001",   # Alternative React port (HTTPS)
-        "http://localhost:5174",    # Alternative Vite port (HTTP)
-        "https://localhost:5174",   # Alternative Vite port (HTTPS)
-        "http://127.0.0.1:5173",    # Vite default IP (HTTP)
-        "https://127.0.0.1:5173",   # Vite default IP (HTTPS)
-        "http://127.0.0.1:3000",    # React default IP (HTTP)
-        "https://127.0.0.1:3000",   # React default IP (HTTPS)
+        "http://localhost:5173",    # Vite default port
+        "http://localhost:3000",    # React default port
+        "http://localhost:3001",    # Alternative React port
+        "http://127.0.0.1:5173",    # Vite default IP
+        "http://127.0.0.1:3000",    # React default IP
+        "http://127.0.0.1:3001",    # Alternative React IP
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
