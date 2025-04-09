@@ -1,10 +1,8 @@
-import ChatUI from './ChatUI';
 //Ally - Note for Team: App.tsx must be used for routing!
-import { useState } from 'react'
-import React from 'react'
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import React from 'react';
+import './App.css';
+import ChatUI from './ChatUI';
 
 // Define types for our chat messages
 interface Message {
@@ -44,7 +42,7 @@ function App() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // Store user input befor clearing it
+    // Store user input before clearing it
     const userInput = input;
 
     // add user message to chat
@@ -102,38 +100,14 @@ function App() {
       });
   };
 
-
   return (
-    <>
-    <div className="chat-app">
-      <div className="chat-container">
-        <div className="messages-container">
-          {messages.map((message, index) => (
-            <div key={index} className={`message ${message.role}`}>
-              <div className="message-content">{message.content}</div>
-            </div>
-          ))}
-        </div>
-        
-        <form className="input-area" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={input}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
-            placeholder="Type a message..."
-            className="message-input"
-          />
-          <button type="submit" className="send-button">Send</button>
-        </form>
-      </div>
-    </div>
-
-    </>
-  )
+    <ChatUI 
+      messages={messages}
+      input={input}
+      setInput={setInput}
+      handleSubmit={handleSubmit}
+    />
+  );
 }
 
-export default App;
-  
-  return <ChatUI />;
-}
 export default App;

@@ -4,29 +4,20 @@ import { useState } from 'react'
 import './App.css'
 import botIcon from './assets/botIcon.png'; 
 
+// Define types for our chat messages
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
 
-function App() {
-  const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Hello! How can I help you today?' }
-  ]);
-  const [input, setInput] = useState('');
+interface ChatUIProps {
+  messages: Message[];
+  input: string;
+  setInput: (input: string) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    //adds user message to chat
-    setMessages([...messages, { role: 'user', content: input }]);
-    setInput('');
-    
-    //API response holder (we can take this out/tweak it once we figure out how to connect everything)
-    setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: 'This is a placeholder response. The actual implementation will go here.'
-      }]);
-    }, 500);
-  };
+function ChatUI({ messages, input, setInput, handleSubmit }: ChatUIProps) {
 
 
   return (
@@ -65,4 +56,4 @@ function App() {
   )
 }
 
-export default App;
+export default ChatUI;
