@@ -33,6 +33,11 @@ class DatabaseConfig:
         self.max_idle_time_ms = int(os.getenv("MONGODB_MAX_IDLE_TIME_MS", "50000"))
         self.connection_timeout_ms = int(os.getenv("MONGODB_CONNECTION_TIMEOUT_MS", "20000"))
         
+        # SSL/TLS configuration
+        self.tls_enabled = os.getenv("MONGODB_TLS_ENABLED", "true").lower() == "true"
+        self.tls_allow_invalid_certs = os.getenv("MONGODB_TLS_ALLOW_INVALID_CERTS", "false").lower() == "true"
+        self.tls_ca_file = os.getenv("MONGODB_TLS_CA_FILE", None)
+
         logger.info(f"Database configuration loaded for {self.db_name}")
 
     def _get_required_env(self, var_name: str) -> str:
@@ -55,23 +60,33 @@ class DatabaseConfig:
         Raises: ValueError: If the MongoDB URI is invalid or cannot be formatted
         """
         # Get the raw URI from environment variables
-        uri = self._get_required_env("MONGODB_URI")
+        mongo_uri = self._get_required_env("MONGODB_URI")
+        return format_uri_for_config(mongo_uri)
         
-        # Use the specialized URI formatter which has better error handling
-        logger.debug("Formatting MongoDB URI using uri_formatter")
-        return format_uri_for_config(uri)
-    
     def get_connection_options(self) -> dict:
         """
         Get all connection options as a dictionary for the MongoDB client.
         Returns: Dictionary of connection options
         """
-        return {
+        options = {
             "maxPoolSize": self.max_pool_size,
             "minPoolSize": self.min_pool_size,
             "maxIdleTimeMS": self.max_idle_time_ms,
             "connectTimeoutMS": self.connection_timeout_ms,
         }
+
+        # Add TLS options if TLS is enabled (for MongoDB Atlas this is always enabled)
+        if self.tls_enabled:
+            options.update({
+                "tls": True,
+                "tlsAllowInvalidCertificates": self.tls_allow_invalid_certs,
+            })
+            
+            # Add CA certificates file path if provided
+            if self.tls_ca_file:
+                options["tlsCAFile"] = self.tls_ca_file
+
+        return options
     
     def __str__(self) -> str:
         """Return a string representation of the configuration (without sensitive data)."""
@@ -89,7 +104,8 @@ class DatabaseConfig:
             f"DatabaseConfig(uri={safe_uri}, "
             f"db_name={self.db_name}, "
             f"max_pool_size={self.max_pool_size}, "
-            f"min_pool_size={self.min_pool_size})"
+            f"min_pool_size={self.min_pool_size}, "
+            f"tls_enabled={self.tls_enabled})"
         )
 
 
