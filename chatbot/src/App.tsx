@@ -1,3 +1,4 @@
+import ChatUI from './ChatUI';
 //Ally - Note for Team: App.tsx must be used for routing!
 import { useState } from 'react'
 import React from 'react'
@@ -131,4 +132,8 @@ function App() {
   )
 }
 
+export default App;
+  
+  return <ChatUI />;
+}
 export default App;
