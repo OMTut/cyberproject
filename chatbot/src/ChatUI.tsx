@@ -2,6 +2,8 @@ import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import './App.css'
+import botIcon from './assets/botIcon.png'; 
+
 
 function App() {
   const [messages, setMessages] = useState([
@@ -31,12 +33,16 @@ function App() {
     <>
     <div className="chat-app">
     <header className="chat-header">
-          <h1>NobleGuard</h1>
+    <img src={botIcon} alt="Bot Icon" className="chat-icon" />
+     <h1>NobleGuard</h1>
       </header>
       <div className="chat-container">
         <div className="messages-container">
           {messages.map((message, index) => (
             <div key={index} className={`message ${message.role}`}>
+               {message.role === 'assistant' && (
+               <img src={botIcon} alt="Bot Icon" className="message-icon" />
+              )}
               <div className="message-content">{message.content}</div>
             </div>
           ))}
