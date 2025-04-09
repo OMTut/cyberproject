@@ -11,8 +11,8 @@ class LLMService:
         if not self.api_token:
             raise ValueError("HUGGINGFACE_API_KEY not found in environment variables")
         
-        self.api_url = "https://api-inference.huggingface.co/models/google/gemma-2b-it"
-        #self.api_url = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
+        #self.api_url = "https://api-inference.huggingface.co/models/google/gemma-2b-it"
+        self.api_url = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
         #self.api_url = "https://api-inference.huggingface.co/models/gpt2"
         self.headers = {"Authorization": f"Bearer {self.api_token}"}
         self.logger = logging.getLogger(__name__)
@@ -49,7 +49,7 @@ class LLMService:
                     self.api_url,
                     headers=self.headers,
                     json=payload,
-                    timeout=30  # Add timeout to prevent hanging
+                    timeout=60  # Add timeout to prevent hanging
                 )
             )
             response.raise_for_status()  # Raise exception for bad status codes

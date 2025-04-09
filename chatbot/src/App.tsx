@@ -15,6 +15,7 @@ interface Message {
 interface ApiResponse {
   response?: string;
   message?: string;
+  generated_text?: string;
   [key: string]: any;
 }
 
@@ -23,6 +24,20 @@ function App() {
     { role: 'assistant', content: 'Hello! How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
+
+  // Helper function to clean response text
+  const cleanResponseText = (text: string): string => {
+    // Remove excessive newlines (more than 2 consecutive)
+    let cleaned = text.replace(/\n{3,}/g, '\n\n');
+    
+    // Trim leading and trailing whitespace
+    cleaned = cleaned.trim();
+    
+    // Remove any non-printable characters
+    cleaned = cleaned.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/g, '');
+    
+    return cleaned;
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,10 +65,30 @@ function App() {
         return response.json();
       })
       .then((data: ApiResponse) => {
+        // Extract and clean the response text
+        let responseText: string;
+        
+        if (data.generated_text) {
+          // If we have a generated_text field, use that
+          responseText = data.generated_text;
+        } else if (data.response) {
+          // If we have a response field, use that
+          responseText = data.response;
+        } else if (data.message) {
+          // Fallback to message field
+          responseText = data.message;
+        } else {
+          // Last resort, stringify the whole data
+          responseText = JSON.stringify(data);
+        }
+        
+        // Clean the text to remove excessive formatting
+        const cleanedText = cleanResponseText(responseText);
+        
         // Add the assistant's response to the chat
         setMessages(prev => [...prev, { 
           role: 'assistant', 
-          content: data.response || data.message || JSON.stringify(data)
+          content: cleanedText
         }]);
       })
       .catch((error: Error) => {
