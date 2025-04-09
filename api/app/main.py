@@ -15,6 +15,7 @@
 #     ex: prompts/attacks/jailbreak
 ##############################################################
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.services.database.connection import connect_to_mongo, close_mongo_connection
 import logging
 
@@ -36,6 +37,15 @@ logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI()
+
+# Add CORS middleware to allow requests from frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Frontend origin
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 # Add startup event handler for overall app
 @app.on_event("startup")
