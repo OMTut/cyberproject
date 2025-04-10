@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ChatContainer from './components/ChatContainer';
-import Dashboard from './dashboard';
+import DashboardContainer from './components/dashboard/DashboardContainer';
 
 function App() {
   return(
     <Router>
       <Routes>
         <Route path="/" element={<ChatContainer />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<DashboardContainer />} />
       </Routes>
     </Router>
   );
