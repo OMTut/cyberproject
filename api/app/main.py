@@ -49,18 +49,16 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Add CORS middleware to allow requests from frontend
+origins = [
+    "http://localhost:5173",
+    "https://localhost:5173"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",    # Vite default port
-        "http://localhost:3000",    # React default port
-        "http://localhost:3001",    # Alternative React port
-        "http://127.0.0.1:5173",    # Vite default IP
-        "http://127.0.0.1:3000",    # React default IP
-        "http://127.0.0.1:3001",    # Alternative React IP
-    ],
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
