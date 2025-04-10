@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import './App.css';
-import botIcon from './assets/botIcon.png'; 
-import { Message } from './types/chat';
+import '../App.css';
+import botIcon from '../assets/botIcon.png'; 
+import { Message } from '../types/chat';
 
 interface ChatUIProps {
   messages: Message[];
@@ -54,3 +54,4 @@ function ChatUI({ messages, input, setInput, handleSubmit }: ChatUIProps) {
 }
 
 export default ChatUI;
+
