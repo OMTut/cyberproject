@@ -1,7 +1,6 @@
-import { useState } from 'react'
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './App.css';
 import botIcon from './assets/botIcon.png'; 
 
 
@@ -28,12 +27,16 @@ function App() {
     }, 500);
   };
 
+  const navigate = useNavigate();
 
+    const navigateToDash = () => {
+      navigate('/dashboard');
+    };
   return (
     <>
     <div className="chat-app">
     <header className="chat-header">
-    <img src={botIcon} alt="Bot Icon" className="chat-icon" />
+    <img src={botIcon} alt="Bot Icon" className="chat-icon" onClick={navigateToDash}/>
      <h1>NobleGuard</h1>
       </header>
       <div className="chat-container">
