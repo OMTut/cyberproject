@@ -1,13 +1,13 @@
 // Define prompt types for API responses
 
 export interface Prompt {
-  id: string;
-  text: string;
-  timestamp: string;
-  is_attack: boolean;
-  attack_type?: string;
+  _id: string;
+  prompt: string;
+  isAttack: boolean;
+  attackType?: string;
   confidence?: number;
   matches?: string[];
+  created_at: string;
 }
 
 export interface ApiState<T> {

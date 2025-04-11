@@ -16,7 +16,7 @@ const AttacksPanel: React.FC = () => {
   
   if (attacks) {
     attacks.forEach(attack => {
-      const type = attack.attack_type || 'unknown';
+      const type = attack.attackType || 'unknown';
       attackTypes[type] = (attackTypes[type] || 0) + 1;
     });
   }
@@ -31,13 +31,13 @@ const AttacksPanel: React.FC = () => {
         <div className="error-message">{error}</div>
       ) : attacks && attacks.length > 0 ? (
         <div className="simple-stats">
-          <p><strong>Number of Attacks:</strong> {attacks.length}</p>
+          <p>Number of Attacks: {attacks.length}</p>
           
           <h3>Attacks by Type:</h3>
           <ul className="simple-attack-list">
             {Object.entries(attackTypes).map(([type, count]) => (
               <li key={type}>
-                <strong>{type}:</strong> {count}
+                {type}: {count}
               </li>
             ))}
           </ul>

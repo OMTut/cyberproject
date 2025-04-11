@@ -10,9 +10,17 @@ const PromptsOverview: React.FC = () => {
     getAllPrompts();
   }, []);
 
+  // Log prompts data for debugging
+  useEffect(() => {
+    if (prompts) {
+      console.log('Prompts data:', prompts);
+      console.log('First prompt example:', prompts[0]);
+    }
+  }, [prompts]);
+
   // Calculate statistics
   const totalPrompts = prompts?.length || 0;
-  const attackPrompts = prompts?.filter(p => p.is_attack)?.length || 0;
+  const attackPrompts = prompts?.filter(p => p.isAttack)?.length || 0;
   const attackPercentage = totalPrompts > 0 ? (attackPrompts / totalPrompts) * 100 : 0;
 
   return (
@@ -25,9 +33,9 @@ const PromptsOverview: React.FC = () => {
         <div className="error-message">{error}</div>
       ) : prompts ? (
         <div className="simple-stats">
-          <p><strong>Total Prompts:</strong> {totalPrompts}</p>
-          <p><strong>Total Attacks:</strong> {attackPrompts}</p>
-          <p><strong>Attack Percentage:</strong> {attackPercentage.toFixed(1)}%</p>
+          <p>Total Prompts: {totalPrompts}</p>
+          <p>Total Attacks: {attackPrompts}</p>
+          <p>Attack Percentage: {attackPercentage.toFixed(1)}%</p>
         </div>
       ) : (
         <p>No prompts data available</p>

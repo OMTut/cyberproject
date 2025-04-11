@@ -4,6 +4,7 @@ import botIcon from '../../assets/botIcon.png';
 import '../../dashboard.css';
 import PromptsOverview from './PromptsOverview';
 import AttacksPanel from './AttacksPanel';
+import AttackRows from './AttackRows';
 
 
 const DashboardContainer: React.FC = () => {
@@ -27,7 +28,7 @@ const DashboardContainer: React.FC = () => {
         </div>
         
         <div className="dashboard-bottom-row">
-
+          <AttackRows />
         </div>
       </div>
       
