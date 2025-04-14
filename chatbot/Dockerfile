@@ -1,5 +1,5 @@
-# Use an official Node.js image
-FROM node
+# Use Node 22.9.0 to match local environment exactly
+FROM node:22.9.0
 
 # Set the working directory
 WORKDIR /chatbot
@@ -7,14 +7,12 @@ WORKDIR /chatbot
 # Install dependencies
 COPY package.json ./
 
-RUN rm -rf node_modules && \
-    npm cache clean --force && \
-    npm install -g npm@latest && \
-    npm i esbuild@0.25.1 && \
-    npm i && \
-    npm list esbuild && \
+# Clean installation with platform-specific flags
+RUN npm cache clean --force && \
+    npm install --platform=linux --arch=x64 && \
     echo "Node version: $(node -v)" && \
-    echo "NPM version: $(npm -v)"
+    echo "NPM version: $(npm -v)" && \
+    echo "esbuild version: $(npm list esbuild | grep esbuild)"
 
 # Copy the rest of the app's source code
 COPY . .
