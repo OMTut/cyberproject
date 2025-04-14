@@ -1,10 +1,15 @@
 # Cyberproject
 
-### Noble Team Members
-
 ## Docker Install
 
-start Docker Desktop
+requirements<BR>
+windows
+- docker desktop
+
+linux
+- docker
+- docker-compose
+
 
 cd into cyberproject director
 ```yaml
@@ -24,8 +29,10 @@ then compose it up to re-build it
 
 ### Ports
 The ports are currently mapped to the following
-- chatbot 3001
-- dashboar 3002
+- chatbot 5173
 - api 5000
 
 in a browser, goto localhost:port
+
+### Noble Team Members
+Sam Arshad, Alyana Imperial, Lucy Ngui, Jason Tuttle, Jonas Tuttle
