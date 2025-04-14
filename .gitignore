@@ -16,3 +16,7 @@ __pycache__/
 site-packages/
 
 .DS_Store
+
+# Ignore hefty model files
+/api/app/model/
+/api/app/artifacts/
