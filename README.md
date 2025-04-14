@@ -47,9 +47,10 @@ docker-compose down
 ### Accessing the Application
 
 Once running, access components at:
-- Chatbot Interface: [http://localhost:5173](http://localhost:5173)
-- API Documentation: [http://localhost:5000/docs](http://localhost:5000/docs)
-- API Endpoints: [http://localhost:5000/prompts](http://localhost:5000/prompts)
+- Chatbot Interface: [http://localhost:5173]
+- Dashboard Interface: Click on the NobleGuard icon [http://localhost:5173/dashboard]
+- API Documentation: [http://localhost:5000/docs]
+- API Endpoints: [http://localhost:5000/prompts]
 
 ## Local Development Setup
 
