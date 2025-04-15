@@ -31,7 +31,10 @@ const AttackRows: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {attacks.map((attack) => (
+            {[...attacks]
+                // Sort by created_at in descending order (most recent first)
+                .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                .map((attack) => (
                 <tr key={attack._id}>
                   <td className="attack-type">{attack.attackType || 'Unknown'}</td>
                   <td className="attack-prompt">{attack.prompt}</td>
