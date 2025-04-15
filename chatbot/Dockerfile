@@ -1,24 +1,17 @@
-# Use Node 22.9.0 to match local environment exactly
-FROM node:22.9.0
+# Use lightweight Node image for serving static files
+FROM node:alpine
 
 # Set the working directory
-WORKDIR /chatbot
+WORKDIR /app
 
-# Install dependencies
-COPY package.json ./
+# Install serve globally for serving static files
+RUN npm install -g serve
 
-# Clean installation with platform-specific flags
-RUN npm cache clean --force && \
-    npm install --platform=linux --arch=x64 && \
-    echo "Node version: $(node -v)" && \
-    echo "NPM version: $(npm -v)" && \
-    echo "esbuild version: $(npm list esbuild | grep esbuild)"
-
-# Copy the rest of the app's source code
-COPY . .
+# Copy only the built files (assuming app is pre-built locally)
+COPY ./dist ./dist
 
 # Expose the port serve will use
 EXPOSE 5173
 
-# Serve the built app
-CMD ["npm", "run", "dev"]
+# Serve the built app using serve
+CMD ["serve", "-s", "dist", "-l", "5173"]

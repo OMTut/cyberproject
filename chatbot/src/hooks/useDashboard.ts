@@ -4,7 +4,7 @@ import { DashboardMetrics, DashboardState } from '../types/dashboard';
 export function useDashboard() {
   // State for dashboard metrics and UI states
   const [state, setState] = useState<DashboardState>({
-    metrics: null,
+    metrics: null as DashboardMetrics | null,
     loading: true,
     error: null
   });
@@ -27,7 +27,7 @@ export function useDashboard() {
       
       // Update state with fetched metrics
       setState({
-        metrics: data,
+        metrics: data as DashboardMetrics,
         loading: false,
         error: null
       });
@@ -35,7 +35,7 @@ export function useDashboard() {
       console.error('Error fetching metrics:', err);
       
       setState({
-        metrics: null,
+        metrics: null as DashboardMetrics | null,
         loading: false,
         error: 'Failed to load dashboard metrics. Please try again later.'
       });
