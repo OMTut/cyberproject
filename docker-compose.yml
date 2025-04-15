@@ -1,14 +1,11 @@
 services:
+  # NOTE: Run 'npm run build' in the chatbot directory before starting containers
   chatbot:
     build:
       context: ./chatbot
       dockerfile: Dockerfile
-    working_dir: /chatbot
     ports:
       - "5173:5173"
-    volumes:
-      - ./chatbot:/chatbot
-      - /chatbot/node_modules
   api:
     build:
       context: ./api
