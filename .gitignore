@@ -19,4 +19,3 @@ site-packages/
 
 # Ignore hefty model files
 /api/app/model/
-/api/app/artifacts/
