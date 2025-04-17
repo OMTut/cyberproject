@@ -1,0 +1,108 @@
+# Model and artifact directories - critical to exclude these large files
+/app/model/
+app/model/
+/app/model/**
+app/model/**
+/model/
+model/
+**/model/
+
+/app/artifacts/
+app/artifacts/
+/app/artifacts/**
+app/artifacts/**
+/artifacts/
+artifacts/
+**/artifacts/
+
+# Model files by extension - catch any that might be missed by directory exclusions
+**/*.pt
+**/*.bin
+**/*.onnx
+**/*.pb
+**/*.safetensors
+**/*.h5
+**/*.model
+**/model_index.json
+**/config.json
+**/pytorch_model.bin
+**/tf_model.h5
+**/tokenizer.json
+
+# HuggingFace cache directories
+**/.cache/huggingface/
+**/.cache/torch/
+**/.cache/transformers/
+.cache/
+
+# Python bytecode
+**/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+.venv
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+tests/
+test/
+
+# Version control
+.git
+.gitignore
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project specific
+data/
+uploads/
+
+
