@@ -12,12 +12,18 @@ class PromptDetectorService:
     def __init__(self):
         # --- determine base paths ---
         this_file = Path(__file__).resolve()
-        repo_root = this_file.parents[3]  
-
+        app_dir = this_file.parent.parent  # Should point to the app directory
+        
+        # Default paths based on app directory structure
+        default_model_dir = app_dir / "model" / "checkpoint-2320"
+        default_mapping_file = app_dir / "artifacts" / "id2label.json"
+        
         # allow overrides via env vars
-        model_dir = Path(os.getenv("MODEL_PATH", repo_root / "model"))
-        mapping_file = Path(os.getenv("ID2LABEL_PATH",
-                                      repo_root / "artifacts" / "id2label.json"))
+        model_dir = Path(os.getenv("MODEL_PATH", default_model_dir))
+        mapping_file = Path(os.getenv("ID2LABEL_PATH", default_mapping_file))
+        
+        logger.info(f"Using model directory: {model_dir}")
+        logger.info(f"Using mapping file: {mapping_file}")
 
         # --- load tokenizer & model from that directory ---
         self.tokenizer = AutoTokenizer.from_pretrained(str(model_dir))
