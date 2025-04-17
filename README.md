@@ -12,6 +12,8 @@ The system features:
 - Comprehensive logging and monitoring capabilities
 
 ## Quick Start Guide
+The LLM Prompt Detector is designed to be run in a docker container. Keep in mind that the model trained for detection is downloaded from one of the team's (Jonas Tuttle) HuggingFace Hubs. This may impact build times depending on your machine. It may be a couple of minutes. Hang in there!
+
 
 ### Prerequisites
 
@@ -32,6 +34,8 @@ cd cyberproject
 ### Docker Installation (Recommended)
 
 The easiest way to deploy all components is using Docker:
+
+Launch Docker Desktop or the Docker environment then use the following command
 
 ```bash
 # Build and start all containers
