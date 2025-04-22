@@ -186,6 +186,9 @@ This contemporary research introduces methodologies for prompt attack detection 
 - Expanded language support
 - Improved detection algorithms
 
+## Link to Fine-tuning Repository
+- https://github.com/jonastuttle/prompt-injection-detector-classifier/tree/final
+
 ## Noble Team Members
 
 - Sam Arshad
