@@ -39,13 +39,13 @@ Launch Docker Desktop or the Docker environment then use the following command
 
 ```bash
 # Build and start all containers
-docker-compose up --build
+docker compose up --build
 
 # Or run in detached mode
-docker-compose up -d
+docker compose up -d
 
 # To stop and remove containers
-docker-compose down
+docker compose down
 ```
 
 ### Accessing the Application
