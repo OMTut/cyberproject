@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Prompt, ApiState, AttackType } from '../types/prompts';
 
-const API_BASE_URL = 'http://localhost:5000';
+// Use environment variable for API URL, fallback to localhost for local dev
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 export const usePromptsApi = () => {
   const [allPromptsState, setAllPromptsState] = useState<ApiState<Prompt[]>>({

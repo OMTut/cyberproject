@@ -15,7 +15,8 @@ export function useDashboard() {
       setState(prev => ({ ...prev, loading: true, error: null }));
       
       console.log('Fetching dashboard metrics...');
-      const response = await fetch('http://localhost:5000/api/metrics');
+      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiBaseUrl}/api/metrics`);
       
       // Check for error responses
       if (!response.ok) {
