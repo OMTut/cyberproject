@@ -27,7 +27,7 @@ The LLM Prompt Detector is designed to be run in a docker container. Keep in min
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-organization/cyberproject.git
+git clone https://github.com/OMTut/cyberproject.git
 cd cyberproject
 ```
 
