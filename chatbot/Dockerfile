@@ -16,6 +16,10 @@ RUN npm ci
 # Copy all source files
 COPY . .
 
+# Build arg for API URL - Vite embeds this at build time
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
+
 # Build the application with error handling
 RUN npm run build || (echo "Build failed!" && exit 1)
 
